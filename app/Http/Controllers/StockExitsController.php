@@ -41,7 +41,6 @@ class StockExitsController extends Controller
             if ($stockBalance && $stockBalance->total_quantity >= $request->quantity) {
                 StockExits::create([
                     "product_id" => $request->product_id,
-                    "currency_rate_id" => $request->currency_rate_id,
                     "quantity" => $request->quantity,
                     "price" => $request->price,
                 ]);

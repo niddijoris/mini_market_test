@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stock_exits', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('currency_rate_id')->constrained('currency_rates')->onDelete('cascade');
+            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
             $table->integer('quantity');
             $table->double('price');
             $table->timestamps();
