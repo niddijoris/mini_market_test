@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StockBalance;
 use App\Models\StockEntries;
+use App\Models\Currency_rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,13 +23,30 @@ class StockEntriesController extends Controller
      */
     public function store(Request $request)
     {
+        $latestRate = Currency_rate::where('currency_id', $request->currency_id)
+            ->orderBy('created_at','desc')
+            ->first();
+
+            if (!$latestRate) {
+                return response(["message" => "Valyuta kursi topilmadi"], 400);
+            }
+
+        
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
+            $request->validate([
+                "supplier_id" => "required|numeric|gt:0",
+                "product_id" => "required|numeric|gt:0",
+                "currency_id" => "required|numeric|gt:0",
+                "quantity" => "required|numeric|gt:0",
+                "price" => "required|numeric|gt:0",
+            ]);
 
             StockEntries::create([
                 "supplier_id" => $request->supplier_id,
                 "product_id" => $request->product_id,
-                "currency_rate_id" => $request->currency_rate_id,
+                "currency_id" => $request->currency_id,
+                "exchange_rate" => $latestRate->id,
                 "quantity" => $request->quantity,
                 "price" => $request->price,
             ]);
@@ -46,7 +64,7 @@ class StockEntriesController extends Controller
                     "total_quantity" => $request->quantity,
                 ]);
             }
-
+            
             DB::commit();
             return response(["message" => "Maxsulot kirim qilindi"], 201);
         } catch (\Exception $e) {

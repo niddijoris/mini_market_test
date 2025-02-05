@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StockEntries extends Model
 {
-    protected $guarded =[];
+    protected $guarded = [];
 
     public function product()
     {
@@ -21,9 +21,25 @@ class StockEntries extends Model
 
     public function currency()
     {
+        return $this->belongsTo(Currency::class, "currency_id", "id");
+    }
+
+    public function currencyrate()
+    {
         return $this->belongsTo(Currency_rate::class, "currency_rate_id", "id");
     }
 
-   
-
+    // public function currencyLast()
+    // {
+    //     $latestRate = Currency_rate::where('currency_id', $this->currency_id)
+    //         ->latest()
+    //         ->first();
+            
+    //     if ($latestRate) {
+    //         $this->currency_rate_id = $latestRate->id;
+    //         $this->save();
+    //     }
+        
+    //     return $latestRate;
+    // }
 }
