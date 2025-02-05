@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Suppliers as Supplier;
 use Illuminate\Http\Request;
 
 class SuppliersController extends Controller
@@ -11,7 +12,7 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        //
+        return Supplier::all();
     }
 
     /**
@@ -19,7 +20,9 @@ class SuppliersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Supplier::create($request->all());
+        return response()->json(['message'=>'Taminotchi saqlandi'], 201);
+
     }
 
     /**
@@ -27,7 +30,8 @@ class SuppliersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        return response()->json($supplier);
     }
 
     /**
@@ -35,7 +39,9 @@ class SuppliersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        $supplier->update($request->all());
+        return response()->json(['message'=> 'Ta\'minotchi yangilandi '],200);
     }
 
     /**

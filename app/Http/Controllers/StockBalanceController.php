@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StockBalance;
 use Illuminate\Http\Request;
 
 class StockBalanceController extends Controller
@@ -11,7 +12,7 @@ class StockBalanceController extends Controller
      */
     public function index()
     {
-        //
+        return StockBalance::all();
     }
 
     /**
@@ -27,7 +28,8 @@ class StockBalanceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $stock = StockBalance::findOrFail($id);
+        return response()->json($stock);
     }
 
     /**

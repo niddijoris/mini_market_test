@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Products;
+use App\Models\SellingPrice;
 
 class SellingPriceController extends Controller
 {
@@ -11,7 +13,7 @@ class SellingPriceController extends Controller
      */
     public function index()
     {
-        //
+        return SellingPrice::all();
     }
 
     /**
@@ -19,7 +21,12 @@ class SellingPriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SellingPrice::create([
+            "product_id" => $request->product_id,
+            "usd_price" => $request->usd_price,
+            "uzs_price" => $request->uzs_price,
+        ]);
+        return response()->json(["message" => "Sotish narxi saqlandi"], 201);
     }
 
     /**
@@ -27,7 +34,8 @@ class SellingPriceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $sellingPrice = SellingPrice::find($id);
+        return response()->json(["message"=> $sellingPrice],200);
     }
 
     /**
@@ -35,7 +43,13 @@ class SellingPriceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // $sellingPrice = SellingPrice::find($id);
+        // $sellingPrice->update([
+        //     "product_id" => $request->product_id,
+        //     "usd_price" => $request->usd_price,
+        //     "uzs_price" => $request->uzs_price,
+        // ]);
+        // return response()->json(["message"=> "Sotish narxi yangilandi"],200);
     }
 
     /**

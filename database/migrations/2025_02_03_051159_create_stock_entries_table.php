@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
+            $table->foreignId('currency_rate_id')->constrained('currency_rates')->onDelete('cascade');
             $table->integer('quantity'); // fixed method call
             $table->decimal('price', 8, 2)->default(0);
             $table->timestamps();
