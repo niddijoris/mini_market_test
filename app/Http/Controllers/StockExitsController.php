@@ -26,12 +26,12 @@ class StockExitsController extends Controller
 
         $request->validate([
             "product_id" => "required|numeric|gt:0",
-            "currency_rate_id" => "required|numeric|gt:0",
+            "currency_id" => "required|numeric|gt:0",
             "quantity" => "required|numeric|gt:0",
             "price" => "required|numeric|gt:0",
         ]);
 
-
+        
         DB::beginTransaction();
 
 
@@ -41,6 +41,7 @@ class StockExitsController extends Controller
             if ($stockBalance && $stockBalance->total_quantity >= $request->quantity) {
                 StockExits::create([
                     "product_id" => $request->product_id,
+                    "currency_id" => $request->currency_id,
                     "quantity" => $request->quantity,
                     "price" => $request->price,
                 ]);

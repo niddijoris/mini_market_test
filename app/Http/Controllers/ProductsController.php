@@ -64,7 +64,7 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        Products::find($id)->delete();
-        return response()->json(["message"=> "Maxsulot o'chirildi"],204) ;
+        // Products::find($id)->delete();
+        // return response()->json(["message"=> "Maxsulot o'chirildi"],204) ;
     }
 }
