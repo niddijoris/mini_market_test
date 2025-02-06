@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\CurrencyRateController;
+use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SellingPriceController;
 use App\Http\Controllers\StockBalanceController;
@@ -30,6 +31,8 @@ Route::resource('stock_entires', StockEntriesController::class);
 Route::resource('stock_exits', StockExitsController::class);
 Route::resource('selling_price', SellingPriceController::class);
 Route::resource('stock_balance', StockBalanceController::class);
+Route::resource('financial_control', FinancialController::class);
+
 
 
 
