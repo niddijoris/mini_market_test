@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\StockExits;
 use App\Models\StockBalance;
+use App\Models\Currency_rate;
 use Illuminate\Support\Facades\DB;
-use App\Models\SellingPrice;
 
 class StockExitsController extends Controller
 {
@@ -23,6 +23,14 @@ class StockExitsController extends Controller
      */
     public function store(Request $request)
     {
+        $latestRate = Currency_rate::where('currency_id', $request->currency_id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if (!$latestRate) {
+            return response(["message" => "Valyuta kursi topilmadi"], 400);
+        }
+
 
         $request->validate([
             "product_id" => "required|numeric|gt:0",
@@ -31,7 +39,7 @@ class StockExitsController extends Controller
             "price" => "required|numeric|gt:0",
         ]);
 
-        
+
         DB::beginTransaction();
 
 
@@ -42,6 +50,7 @@ class StockExitsController extends Controller
                 StockExits::create([
                     "product_id" => $request->product_id,
                     "currency_id" => $request->currency_id,
+                    "exchange_rate" => $latestRate->id,
                     "quantity" => $request->quantity,
                     "price" => $request->price,
                 ]);

@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_exits', function (Blueprint $table) {
+        Schema::create('money_transfers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
-            $table->foreignId('exchange_rate');
-            $table->integer('quantity');
-            $table->double('price');
+            
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_exits');
+        Schema::dropIfExists('money_transfers');
     }
 };
